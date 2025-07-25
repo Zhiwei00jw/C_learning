@@ -28,5 +28,4 @@ double tri_area(double x,double y,double z){
         return 0;
     }    
         
-
 }

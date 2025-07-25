@@ -15,6 +15,7 @@ int main(){
     for(i=0;i<n;i++){
         scanf("%d",&a[i]);
     }
+    //将所有符合条件的下标都储存到b[]中
     for(i=0;i<n;i++){
         if(a[i]==x){
             num++;
@@ -42,12 +43,5 @@ int main(){
     
     system("pause"); 
     return 0;
-
-
-    
-
-
-
-
 }
 

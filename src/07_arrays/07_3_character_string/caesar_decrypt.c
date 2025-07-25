@@ -1,4 +1,4 @@
-//对字符串进行凯撒密码加密操作
+//对字符串进行凯撒密码解密操作
 #include <stdio.h>
 #define MAXLINE 80
 #define M 26
@@ -15,23 +15,24 @@ int main(){
     s[k]='\0';
     printf("Enter offset:");
     scanf("%d",&offset);
+    //对密码进行解密
     while(s[i]!='\0'){
         if(s[i]>='A'&&s[i]<='Z'){
-            if(s[i]-'A'+offset<M){
-                s[i]=s[i]+offset;
+            if(s[i]-'A'-offset>=0){
+                s[i]=s[i]-offset;
             }else{
-                s[i]=s[i]-(M-offset);
+                s[i]=s[i]+(M-offset);
             }
         }else if(s[i]>='a'&&s[i]<='z'){
-                if(s[i]-'a'+offset<M){
-                    s[i]=s[i]+offset;
+                if(s[i]-'a'-offset>=0){
+                    s[i]=s[i]-offset;
                 }else{
-                    s[i]=s[i]-(M-offset);
+                    s[i]=s[i]+(M-offset);
                 }
         }
         i++;                
     }
-    //输出加密后的密码
+    //输出解密后的密码
     printf("After being encrypted:");
     i=0;
     while(s[i]!='\0'){

@@ -19,7 +19,7 @@ void month_day(int year,int days,int *pmonth,int *pday){
     {
         index=1;
     }
-    //求月份和天数
+    //求月份和天数；和我的方法的不同之处，我是正向加，最后还需要用减法计算天数，这个直接是减法，且简化了判断条件
     for(k=1;days>tab[index][k];k++)
         days-=tab[index][k];
     *pmonth=k;
