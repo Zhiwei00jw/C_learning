@@ -99,11 +99,17 @@ void insert(int *a,int value,int count){
     int i=0,j=0;
     //从a[i]开始逐个往后移一位
     for(i=0;i<count;i++){
-        if(value<a[i]){
-            for(j=count;j>i;j--){
-                a[j]=a[j-1];
+        if(value<=a[i]){
+            if(value<a[i]){
+                for(j=count;j>i;j--){
+                    a[j]=a[j-1];
+                }
+                a[j]=value;
+            }else{
+                printf("Repeated number.\n");
+                count--;
             }
-            a[j]=value;
+
             break;
         }
     }
