@@ -35,6 +35,7 @@ int main() {
 int input_array(int *a) {
     int i=0;
     int count=0;
+    int min,j,index,delete=0,temp;
     //输入数组中数据个数，修改全局变量count以便于各个函数共用
     printf("Enter count:\n");
     scanf("%d",&count);
@@ -44,7 +45,37 @@ int input_array(int *a) {
         scanf("%d",&a[i]);
     }    
     printf("Function input_array is called.\n");
-    return count;
+    //当输入的是无序或有重复数字数组时，进行排序并删除重复数字
+    //选择排序法
+    min=a[0];
+    for(j=0;j<count;j++){
+        for(i=j;i<count;i++){
+            if(min>=a[i]){
+                min=a[i];
+                index=i;
+            }
+        }
+        temp=a[index];
+        a[index]=a[j];
+        a[j]=temp;
+        min=a[j+1];
+    }
+    //排好序的数组删除重复数字
+    i=1;
+    while(i<count-delete){
+        if(a[i]==a[i-1]){
+            j=i;
+            delete++;
+            while(j<count-1){
+                a[j]=a[j+1];
+                j++;
+            }           
+        }else{
+            i++;
+        }
+    }
+    print_array(a,count-delete);
+    return count-delete;
 }
 void select(int *a,int operation,int value,int count){
     switch (operation)
@@ -130,4 +161,5 @@ void print_array(int *a,int num){
     for(i=0;i<num;i++){
         printf("a[%d]=%d ",i,a[i]);
     }
+    printf("\n");
 }
