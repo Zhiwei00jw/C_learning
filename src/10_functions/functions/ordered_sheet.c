@@ -3,19 +3,20 @@
 #include <string.h>
 //定义数组最大值
 #define MAX 20 
-int count=0;
+//不使用全局变量count；int count=0;
 // 函数声明
-void input_array(int *a);
-void select(int *a,int operation,int value);
-void insert(int *a,int value);
-void remove_value(int *a,int value);
-int query(int *a,int value);
+int input_array(int *a);
+void select(int *a,int operation,int value,int count);
+void insert(int *a,int value,int count);
+void remove_value(int *a,int value,int count);
+int query(int *a,int value,int count);
 void print_array(int *a,int num);
 int main() {
     int a[MAX];
+    int count;
     int operation,value;
     //先输入待操作的有序数组
-    input_array(a); 
+    count=input_array(a); 
     //在桌面显示操作菜单
     printf("[1] Insert\n");
     printf("[2] Delete\n");
@@ -25,14 +26,15 @@ int main() {
     scanf("%d",&operation);
     printf("Enter value:\n");
     scanf("%d",&value);
-    select(a,operation,value);
+    select(a,operation,value,count);
     system("pause");
     return 0;
 }
 
 // 函数定义
-void input_array(int *a) {
+int input_array(int *a) {
     int i=0;
+    int count=0;
     //输入数组中数据个数，修改全局变量count以便于各个函数共用
     printf("Enter count:\n");
     scanf("%d",&count);
@@ -42,18 +44,19 @@ void input_array(int *a) {
         scanf("%d",&a[i]);
     }    
     printf("Function input_array is called.\n");
+    return count;
 }
-void select(int *a,int operation,int value){
+void select(int *a,int operation,int value,int count){
     switch (operation)
     {
     case 1:
-        insert(a,value);
+        insert(a,value,count);
         break;
     case 2:
-        remove_value(a,value);
+        remove_value(a,value,count);
         break;
     case 3:
-        query(a,value);
+        query(a,value,count);
         break;
     
     default:
@@ -61,7 +64,7 @@ void select(int *a,int operation,int value){
     }
 
 }
-void insert(int *a,int value){
+void insert(int *a,int value,int count){
     int i=0,j=0;
     //从a[i]开始逐个往后移一位
     for(i=0;i<count;i++){
@@ -80,9 +83,9 @@ void insert(int *a,int value){
     print_array(a,count+1);
 
 }
-void remove_value(int *a,int value){
+void remove_value(int *a,int value,int count){
     //调用查找函数直接返回待查找值的位置
-    int index=query(a,value);
+    int index=query(a,value,count);
     //没找到，直接打印原数组
     if(index==-1){
         print_array(a,count);
@@ -94,7 +97,7 @@ void remove_value(int *a,int value){
         print_array(a,count-1);   
     }
 }
-int query(int *a,int value){
+int query(int *a,int value,int count){
     int low=0;
     int high=count-1;
     int mid,index=0;
