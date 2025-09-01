@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+//定义数组最大值
+#define MAX 20 
+int count=0;
+// 函数声明
+void input_array(int *a);
+void select(int *a,int operation,int value);
+void insert(int *a,int value);
+void remove_value(int *a,int value);
+int query(int *a,int value);
+void print_array(int *a,int num);
+int main() {
+    int a[MAX];
+    int operation,value;
+    //先输入待操作的有序数组
+    input_array(a); 
+    //在桌面显示操作菜单
+    printf("[1] Insert\n");
+    printf("[2] Delete\n");
+    printf("[3] Query\n");
+    printf("[Other option] End\n");
+    printf("Enter option number:\n");
+    scanf("%d",&operation);
+    printf("Enter value:\n");
+    scanf("%d",&value);
+    select(a,operation,value);
+    system("pause");
+    return 0;
+}
+
+// 函数定义
+void input_array(int *a) {
+    int i=0;
+    //输入数组中数据个数，修改全局变量count以便于各个函数共用
+    printf("Enter count:\n");
+    scanf("%d",&count);
+    printf("Enter %d number in order:\n",count);
+    //逐个输入数组中的数据
+    for(i=0;i<count;i++){
+        scanf("%d",&a[i]);
+    }    
+    printf("Function input_array is called.\n");
+}
+void select(int *a,int operation,int value){
+    switch (operation)
+    {
+    case 1:
+        insert(a,value);
+        break;
+    case 2:
+        remove_value(a,value);
+        break;
+    case 3:
+        query(a,value);
+        break;
+    
+    default:
+        break;
+    }
+
+}
+void insert(int *a,int value){
+    int i=0,j=0;
+    //从a[i]开始逐个往后移一位
+    for(i=0;i<count;i++){
+        if(value<a[i]){
+            for(j=count;j>i;j--){
+                a[j]=a[j-1];
+            }
+            a[j]=value;
+            break;
+        }
+    }
+    //如果把value插入到数组最后
+    if(i>=count){
+        a[count]=value;
+    }
+    print_array(a,count+1);
+
+}
+void remove_value(int *a,int value){
+    //调用查找函数直接返回待查找值的位置
+    int index=query(a,value);
+    //没找到，直接打印原数组
+    if(index==-1){
+        print_array(a,count);
+    }else{          //找到了，从a[i]开始逐个往前移一位
+        int i;
+        for(i=index;i<count-1;i++){
+            a[i]=a[i+1];
+        }
+        print_array(a,count-1);   
+    }
+}
+int query(int *a,int value){
+    int low=0;
+    int high=count-1;
+    int mid,index=0;
+    //循环判断是否存在待查找数，退出条件是low>high
+    while(low<=high){
+        mid=(low+high)/2;
+        if(value==a[mid]){
+            index=1;
+            break;
+        }else if (value<a[mid])
+        {
+            high=mid-1;
+        }else
+        {
+            low=mid+1;
+        }
+       // printf("low=%d,high=%d,mid=%d\n",low,high,mid);
+        
+    }
+    if(index==0){
+        printf("Not found.\n");
+        return -1;
+    }else{
+        printf("Found.\n");
+        return mid;
+    }
+}
+void print_array(int *a,int num){
+    int i=0;
+    for(i=0;i<num;i++){
+        printf("a[%d]=%d ",i,a[i]);
+    }
+}
