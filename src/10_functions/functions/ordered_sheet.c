@@ -116,6 +116,11 @@ void select(int *a,int operation,int value,int *count){
 }
 void insert(int *a,int value,int *count){
     int i=0,j=0,index=1;
+    //代码边界检查，数组范围是否超出
+    if(*count>=MAX){
+        printf("Error:over the limitation.");
+        return;
+    }
     //从a[i]开始逐个往后移一位
     for(i=0;i<*count;i++){
         if(value<=a[i]){
@@ -152,7 +157,12 @@ void remove_value(int *a,int value,int *count){
     //没找到，直接打印原数组
     if(index==-1){
         print_array(a,*count);
-    }else{          //找到了，从a[i]开始逐个往前移一位
+    }else{    
+        //判断边界条件，count删除后数组元素>0?
+        if(*count==1){
+            printf("Error:too few number.");
+            return;
+        }
         int i;
         for(i=index;i<*count-1;i++){
             a[i]=a[i+1];
